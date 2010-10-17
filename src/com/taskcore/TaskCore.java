@@ -4,6 +4,7 @@
 
 package com.taskcore;
 
+
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -21,13 +22,20 @@ public class TaskCore extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
         setContentView(R.layout.tasks_list);
         mDbHelper = new TasksDbAdapter(this);
         mDbHelper.open();
         fillData();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	boolean result = super.onCreateOptionsMenu(menu);
+        menu.add(0, INSERT_ID, 0, R.string.menu_insert);
+    	return result;
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
@@ -40,7 +48,7 @@ public class TaskCore extends ListActivity {
     }
     
     private void createTask() {
-        String noteName = "Note " + mTaskNumber++;
+        String noteName = "Task " + mTaskNumber++;
         mDbHelper.createTask(noteName);
         fillData();
     }
